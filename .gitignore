@@ -26,6 +26,10 @@ mvnw.cmd
 *.iws
 *.iml
 *.ipr
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/modules.xml
+
 
 ### NetBeans ###
 /nbproject/private/
@@ -53,6 +57,7 @@ logs/
 src/main/resources/application.properties
 src/main/resources/application.yml
 .env
+.env.*
 
 ### File upload directory ###
 uploads/
