@@ -62,6 +62,10 @@ src/main/resources/application.yml
 ### File upload directory ###
 uploads/
 
+### Ignore the lib directory ###
+lib/
+
+
 ### Tmp, Backup Files ##
 *~
 *.bak

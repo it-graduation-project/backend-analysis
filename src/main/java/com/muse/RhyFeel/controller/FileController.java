@@ -3,38 +3,46 @@ package com.muse.RhyFeel.controller;
 import com.muse.RhyFeel.dto.FileRequestDTO;
 import com.muse.RhyFeel.dto.FileResponseDTO;
 import com.muse.RhyFeel.model.FileEntity;
+import com.muse.RhyFeel.model.FFTData;
+import com.muse.RhyFeel.model.BeatData;
 import com.muse.RhyFeel.repository.FileRepository;
+import com.muse.RhyFeel.repository.FFTDataRepository;
+import com.muse.RhyFeel.repository.BeatDataRepository;
+import com.muse.RhyFeel.service.MusicAnalysisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.*;
 
-@CrossOrigin(origins = {"http://localhost:3000", "${ngrok.url}"}) // 명확한 출처 시 허용
-//@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = {"http://localhost:3000", "${NGROK_URL}"})
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/files")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
-    @Value("${file.upload-dir}")
-    private String uploadDir; // application.properties 참조 (환경변수)
+    @Value("${FILE_UPLOAD_DIR}")
+    private String uploadDir;
 
     @Autowired
     private FileRepository fileRepository;
 
+    @Autowired
+    private MusicAnalysisService musicAnalysisService;
+
     @PostMapping
     public ResponseEntity<FileResponseDTO> uploadFile(@ModelAttribute FileRequestDTO fileRequestDTO) {
-        MultipartFile file = fileRequestDTO.getFile(); // DTO에서 파일 추출
+        MultipartFile file = fileRequestDTO.getFile();
         String filePath = null;
 
         try {
@@ -60,39 +68,43 @@ public class FileController {
             fileRepository.save(fileEntity);
             logger.info("File metadata saved in the database");
 
+            // 음악 분석 수행
+            musicAnalysisService.analyzeMusic(fileEntity.getId(), Files.readAllBytes(Paths.get(filePath)));
+
             // 성공 응답 반환
             return ResponseEntity.ok(new FileResponseDTO(
                     "success",
-                    "File uploaded successfully",
+                    "File uploaded and analyzed successfully",
                     file.getOriginalFilename(),
-                    file.getSize()
+                    file.getSize(),
+                    fileEntity.getId()
             ));
-            // 파일 저장 실패 시
         } catch (IOException e) {
             logger.error("File upload failed due to IOException: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(new FileResponseDTO(
                     "error",
                     "File upload failed due to an I/O error. Please try again.",
                     null,
-                    0
+                    0,
+                    null
             ));
-            // 잘못된 입력 처리
         } catch (IllegalArgumentException e) {
             logger.error("File upload failed due to invalid input: {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new FileResponseDTO(
                     "error",
                     "Invalid file upload request. Please check the file and try again.",
                     null,
-                    0
+                    0,
+                    null
             ));
-            // 예상하지 못한 에러 처리
         } catch (Exception e) {
             logger.error("Unexpected error during file upload: {}", e.getMessage(), e);
             return ResponseEntity.status(500).body(new FileResponseDTO(
                     "error",
                     "An unexpected error occurred. Please contact support if the issue persists.",
                     null,
-                    0
+                    0,
+                    null
             ));
         }
     }

@@ -23,9 +23,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS 설정 추가
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/").permitAll() // 루트 경로 허용
-                        .requestMatchers("/upload").permitAll() // 업로드 경로 허용
-                        .anyRequest().authenticated() // 그 외 경로는 인증 필요
+//                        .requestMatchers("/").permitAll() // 루트 경로 허용
+//                        .requestMatchers("/upload").permitAll() // 업로드 경로 허용
+//                        .requestMatchers("/files").permitAll() // 업로드 경로 허용 (경로바꾼 것)
+//                        .requestMatchers("/analysis/**").permitAll() // analysis 경로 허용
+//                        .anyRequest().authenticated() // 그 외 경로는 인증 필요
+                        .anyRequest().permitAll() // 모든 요청 허용 -> 개발 단계에서 사용 중
                 );
 
         return http.build();

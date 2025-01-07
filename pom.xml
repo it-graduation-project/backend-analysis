@@ -68,6 +68,36 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.wendykierp</groupId>
+			<artifactId>JTransforms</artifactId>
+			<version>3.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/JTransforms-3.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>pl.edu.icm</groupId>
+			<artifactId>jlargearrays</artifactId>
+			<version>1.5</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/jlargearrays-1.5.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+
+
+
+
+
+
 	</dependencies>
 
 	<build>
