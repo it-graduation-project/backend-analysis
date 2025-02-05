@@ -2,6 +2,7 @@ package com.muse.RhyFeel.service;
 
 import com.muse.RhyFeel.model.User;
 import com.muse.RhyFeel.repository.UserRepository;
+import com.muse.RhyFeel.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,9 @@ public class UserService {
             return "Invalid password";
         }
 
-        return "Login successful";
+        // JWT 발급
+        String token = JwtUtil.generateToken(email);
+        return "Bearer " + token;
     }
+
 }

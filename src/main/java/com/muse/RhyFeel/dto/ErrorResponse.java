@@ -1,5 +1,8 @@
 package com.muse.RhyFeel.dto;
 
+import lombok.Builder;
+
+@Builder
 public class ErrorResponse {
     private String status;
     private String message;
