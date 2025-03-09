@@ -24,7 +24,7 @@ public class RhyFeelApplication {
 		SpringApplication.run(RhyFeelApplication.class, args);
 	}
 
-	// ❗ 환경변수가 null이면 설정하지 않도록 예외 처리
+	// 환경변수가 null이면 설정하지 않도록 예외 처리
 	private static void setSystemProperty(String key, String value) {
 		if (value != null && !value.trim().isEmpty()) {
 			System.setProperty(key, value);
