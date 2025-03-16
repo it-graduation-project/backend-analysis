@@ -18,7 +18,7 @@ public class RhyFeelApplication {
 		setSystemProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 		setSystemProperty("NGROK_URL", dotenv.get("NGROK_URL"));
 		setSystemProperty("FILE_UPLOAD_DIR", dotenv.get("FILE_UPLOAD_DIR"));
-		setSystemProperty("JWT_SECRET_KEY", dotenv.get("JWT_SECRET_KEY")); // 🔥 JWT 키도 안전하게 로드
+		setSystemProperty("JWT_SECRET_KEY", dotenv.get("JWT_SECRET_KEY")); // JWT 키도 안전하게 로드
 
 		// 스프링 애플리케이션 실행
 		SpringApplication.run(RhyFeelApplication.class, args);

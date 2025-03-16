@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()  // 로그인, 회원가입은 인증 없이 허용
                         .requestMatchers("/").permitAll() // 루트 경로 허용
                         .requestMatchers("/analysis/**").authenticated()  // 음악 분석 API는 인증 필요
-                        .requestMatchers("/files/**").authenticated()  // 파일 업로드/조회는 인증 필요
+                        .requestMatchers("/files/**").authenticated()  // 파일 업로드, 조회는 인증 필요
                         .anyRequest().authenticated() // 그 외 경로는 인증 필요
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); //JWT 필터 적용
@@ -53,7 +53,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // 일단 모든 도메인 허용
+        // 모든 도메인 허용
         configuration.setAllowedOriginPatterns(List.of("*"));
 
         // 모든 HTTP 메서드 허용
