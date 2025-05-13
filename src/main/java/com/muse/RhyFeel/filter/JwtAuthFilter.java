@@ -33,7 +33,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("❌ JWT 없음 또는 잘못된 형식: " + authHeader);
+            System.out.println("JWT 없음 또는 잘못된 형식: " + authHeader);
             filterChain.doFilter(request, response);
             return;
         }
@@ -41,25 +41,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         try {
             String email = JwtUtil.extractEmail(token);
-            System.out.println("✅ JWT 인증 성공 - 이메일: " + email);
+            System.out.println("JWT 인증 성공 - 이메일: " + email);
 
             Optional<User> userOptional = userRepository.findByEmail(email);
             if (userOptional.isEmpty()) {
-                System.out.println("❌ JWT에 있는 이메일이 DB에 없음: " + email);
+                System.out.println("JWT에 있는 이메일이 DB에 없음: " + email);
                 response.setStatus(HttpStatus.FORBIDDEN.value());
                 response.getWriter().write("User not found");
                 return;
             }
 
-            // 🔥 인증 정보 SecurityContext에 설정
+            // 인증 정보 SecurityContext에 설정
             User user = userOptional.get();
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            System.out.println("✅ JWT 검증 완료 - 사용자 확인됨: " + email);
+            System.out.println("JWT 검증 완료 - 사용자 확인됨: " + email);
         } catch (Exception e) {
-            System.out.println("❌ JWT 검증 실패: " + e.getMessage());
+            System.out.println("JWT 검증 실패: " + e.getMessage());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.getWriter().write("Invalid token");
             return;

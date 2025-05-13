@@ -7,6 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig() {
-        System.out.println("🟢 WebConfig - 일반 설정 적용 완료");
+        System.out.println("WebConfig - 일반 설정 적용 완료");
     }
 }

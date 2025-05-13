@@ -28,11 +28,6 @@ public class GlobalExceptionHandler {
         return buildResponseEntity("400", ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
-//        return buildResponseEntity("500", "Internal Server Error: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception e) {
         e.printStackTrace(); // 콘솔에 에러 로그 출력

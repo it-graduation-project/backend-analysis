@@ -28,9 +28,9 @@ public class RhyFeelApplication {
 	private static void setSystemProperty(String key, String value) {
 		if (value != null && !value.trim().isEmpty()) {
 			System.setProperty(key, value);
-			System.out.println("✅ Loaded ENV: " + key);
+			System.out.println("Loaded ENV: " + key);
 		} else {
-			System.out.println("⚠️ Missing ENV: " + key);
+			System.out.println("⚠Missing ENV: " + key);
 		}
 	}
 }
